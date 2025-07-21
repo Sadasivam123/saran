@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Library Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f0f0;
+      padding: 20px;
+      background-image: url("pexels-pixabay-220072.jpg");
+      background-position: center;
+      background-size: cover;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: blueviolet;
+      padding: 10px;
+      border: BLACK 2PX solid;
+      border-radius: 25px;
+    }
+    .drawer-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .drawer {
+      width: 100px;
+      height: 100px;
+      background-color: gray;
+      border: 1px solid black;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background-color 0.3s;
+    }
+    .drawer.green {
+      background-color: green;
+    }
+    .drawer.red {
+      background-color: red;
+    }
+    .buttons {
+      margin-top: 30px;
+      border-radius: 25px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    .btn{
+      border-radius: 25px;
+      font-size: larger;
+      font-weight: 200;
+
+    }
+    .lib{
+      background-color: azure;
+      color: black;
+      border-radius: 25PX;
+      padding:0PX;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+   <div class="lib">
+     <h1>Library Management System</h1>
+   </div>
+ 
+  
+  <div class="drawer-container" id="drawers">
+    <div class="drawer" data-drawer="1">1</div>
+    <div class="drawer" data-drawer="2">2</div>
+    <div class="drawer" data-drawer="3">3</div>
+    <div class="drawer" data-drawer="4">4</div>
+  </div>
+
+  <div class="buttons">
+    <button onclick="submitBook()" class="btn">Submit Book</button>
+    <button onclick="reset()"  class="btn">Reset</button>
+  </div>
+
+  <script>
+    let takenDrawer = null; // Student's selected drawer
+
+    // Student clicks on a drawer to take book
+    document.querySelectorAll('.drawer').forEach(drawer => {
+      drawer.addEventListener('click', () => {
+        if (takenDrawer === null) {
+          takenDrawer = drawer.getAttribute('data-drawer');
+          drawer.classList.add('green');
+          alert(`You took the book from Drawer ${takenDrawer}`);
+        } else {
+          alert('You have already taken a book! Submit it first.');
+        }
+      });
+    });
+
+    // When student submits the book
+    function submitBook() {
+      if (takenDrawer === null) {
+        alert('You have not taken any book yet!');
+        return;
+      }
+      
+      let returnDrawer = prompt('Enter the Drawer number to return the book:');
+      
+      if (returnDrawer === takenDrawer) {
+        alert('Book returned correctly!');
+        document.querySelector(`.drawer[data-drawer="${returnDrawer}"]`).classList.remove('green');
+      } else {
+        alert('Wrong drawer! Red signal shown.');
+        document.querySelector(`.drawer[data-drawer="${returnDrawer}"]`).classList.add('red');
+      }
+      takenDrawer = null; // Reset after returning
+    }
+
+    // Reset all drawers
+    function reset() {
+      document.querySelectorAll('.drawer').forEach(drawer => {
+        drawer.classList.remove('green');
+        drawer.classList.remove('red');
+      });
+      takenDrawer = null;
+    }
+  </script>
+
+</body>
+</html>
